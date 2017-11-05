@@ -1,0 +1,95 @@
+暴力解法思路为：
+
+1.将两个链表的数遍历每个取出，按照个位十位百位等相加存入一整形中
+2.将两个链表得到的整形数相加，得出结果
+3.将相加的结果每位数字，依次存入一个链表中，返回这个结果。
+
+问题：
+
+测试数据当中含有大数值，int与long在尝试之后，都会存在溢出，所以使用Java的大数类型，即BigInteger。
+
+BigInteger有其特有的运算函数，不能使用通常的+，-，*，/
+
+相关代码如下：
+
+http://ly5633.iteye.com/blog/1218724
+
+package Factorial;  
+  
+import java.math.BigInteger;  
+import java.util.Random;  
+/** 
+ * 测试BigInteger类的一些函数 
+ * @author LY 2011-10-27 
+ * */  
+public class BigIntegerDemo {  
+    public static void main(String[] arguments){  
+        System.out.println("构造两个BigInteger对象: ");  
+        //BigInteger(int numBits, Random rnd)   
+        //构造一个随机生成的 BigInteger，它是在 0 到 (2^numBits - 1)（包括）范围内均匀分布的值  
+        BigInteger bi1 =  new BigInteger(55,new Random());  
+        System.out.println("bi1 = " + bi1);  
+          
+        //BigInteger(byte[] val)   
+        //将包含 BigInteger 的二进制补码表示形式的 byte 数组转换为 BigInteger。  
+        BigInteger bi2 = new BigInteger(new byte[]{3,2,3});  
+        System.out.println("bi2 = " + bi2);  
+          
+        //加  
+        System.out.println("bi1 + bi2 = " + bi1.add(bi2));  
+        //减  
+        System.out.println("bi1 - bi2 = " + bi1.subtract(bi2));  
+        //乘  
+        System.out.println("bi1 * bi2 = " + bi1.multiply(bi2));  
+        //指数运算  
+        System.out.println("bi1的2次方 = " + bi1.pow(2));  
+        //整数商  
+        System.out.println("bi1/bi2的整数商: " + bi1.divide(bi2));  
+        //余数  
+        System.out.println("bi1/bi2的余数: " + bi1.remainder(bi2));  
+        //整数商+余数  
+        System.out.println("bi1 / bi2 = " + bi1.divideAndRemainder(bi2)[0] +   
+                "--" + bi1.divideAndRemainder(bi2)[1]);  
+        System.out.println("bi1 + bi2 = " + bi1.add(bi2));  
+        //比较大小,也可以用max()和min()  
+        if(bi1.compareTo(bi2) > 0)  
+  
+               System.out.println("bd1 is greater than bd2");  
+  
+           else if(bi1.compareTo(bi2) == 0)  
+  
+               System.out.println("bd1 is equal to bd2");  
+  
+           else if(bi1.compareTo(bi2) < 0)  
+  
+               System.out.println("bd1 is lower than bd2");  
+        //返回相反数  
+        BigInteger bi3 = bi1.negate();  
+        System.out.println("bi1的相反数: " + bi3);  
+        //返回绝对值  
+        System.out.println("bi1的绝对值:  " + bi3.abs());  
+    }  
+  
+http://blog.csdn.net/w627782664/article/details/7064243
+
+一、为什么为用到BigInteger和BigDecimal这种数据类型呢？
+      我们非常清楚，java里面整型int与浮点型float,double它们存放数据的范围是有边界的。那么如果需要更大的数据时，这些数据类型肯定是满足不了这种需求，所以就用到了BigInteger和BigDecimal来解决这个问题。
+ 
+二、BigInteger与BigDecimal这两个类是什么包里面的？它们的作用分别是什么？
+      1、java.math包
+      2、BigInteger实现了任意精度的整数运算;
+           BigDecimal实现了任意精度的浮点数运算。
+ 
+三、怎么将普通的数值转换成大数值呢？
+      分别调用BigInteger.valueOf("普通数值"),BigDecimal.valueOf("普通数值")即可。
+ 
+四、大数据类BigInteger与BigDecimal它们没有重载"+","-","*"，“/”这四个运算操作符，是不能直接进行数据运算的，那么如何来进行运算操作呢？
+      需要使用BigInteger与BigDecimal中提供的方法：
+      +——add();
+      System.out.println(BigInteger.valueOf(10).add(BigInteger.valueOf(5)));
+      - ——subtract();
+      System.out.println(BigInteger.valueOf(10).subtract(BigInteger.valueOf(5)));
+      *——multiply();
+      System.out.println(BigInteger.valueOf(10).multiply(BigInteger.valueOf(5))); 
+      /——divide();
+      System.out.println(BigInteger.valueOf(10).divide(BigInteger.valueOf(5)));
